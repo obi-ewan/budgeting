@@ -1,8 +1,14 @@
 import csv
+from budgeting.settings import (
+    ALIASES,
+    CSV_HEADERS,
+)
 
 
 def create_debit_dict(transaction_dict):
-    # create & return a new dict of {'Transaction description': float('Debit Amount'), ...}
+    """
+    Create & return a new dict of {'Transaction description': 'Debit Amount', ...}
+    """
     debit_dict = {}
 
     for item in transaction_dict:
@@ -24,17 +30,12 @@ def create_debit_dict(transaction_dict):
 
 
 def match_aliases(description):
-
-    # aliases
-    amazon = {'Amazon': ['Amazon', 'AMZN', 'AMAZON']}
-    scottish_pwr = {'Scottish Power': ['SCOTTISHPOWER']}
-    co_op = {'Co-op': ['CO-OP', 'COOP']}
-
-    # list of aliases to check
-    aliases = [amazon, scottish_pwr, co_op]
-
-    for alias in aliases:
-
+    """
+    Match common Transaction descriptions, and return the aggregated description
+    e.g. AMZN, AMAZON Transactions will be return as Amazon
+    """
+    # aggregate aliases
+    for alias in ALIASES:
         alias_name = next(iter(alias.keys()))
         if any(v in description for v in alias[alias_name]):
             return alias_name
@@ -44,8 +45,11 @@ def match_aliases(description):
 
 
 def parse_csv(filename):
+    """
+    Parse csv statement into a dict of relevant fields
+    """
     # csv headers we are interested in
-    relevant_fields = ['Credit amount', 'Debit Amount', 'Transaction date', 'Transaction description']
+    relevant_fields = CSV_HEADERS
 
     with open(filename) as file:
 
@@ -56,8 +60,10 @@ def parse_csv(filename):
         return item_dict
 
 
-csv_file = 'budgeting.csv'
+csv_file = '../data/statement.csv'
 debit_dict = create_debit_dict(parse_csv(csv_file))
 
+
 a = 1
+
 
