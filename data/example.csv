@@ -1,0 +1,3 @@
+Transaction date,Transaction Type,Sort Code,Account Number,Transaction description,Debit Amount,Credit amount,Balance
+2018-11-22,DEB,12-34-56,12345678,CO-OP,6.5,,1234.29
+2018-11-20,DEB,12-34-56,12345678,AMAZON,15,,1230.79
